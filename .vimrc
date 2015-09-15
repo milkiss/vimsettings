@@ -54,7 +54,41 @@ set cursorline
 set laststatus=2
 set ttimeoutlen=50
 
-colorscheme molokai
+" color settings
+" @see http://www.calmar.ws/vim/256-xterm-24bit-rgb-color-chart.html
+set t_Co=256                 " use 256 color
+set bg=dark
+
+if &term =~ '256color'
+    " Disable Background Color Erase (BCE) so that color schemes
+    " work properly when Vim is used inside tmux and GNU screen.
+    set t_ut=
+endif
+
+" apply base theme
+silent! colorscheme xoria256
+
+" override more customized colors
+highlight StatusLine    ctermfg=LightGreen
+
+highlight LineNr        ctermfg=248 ctermbg=233 guifg=#a8a8a8 guibg=#121212
+highlight SignColumn    ctermfg=248 ctermbg=233 guifg=#a8a8a8 guibg=#121212
+
+highlight Normal        ctermfg=255 guifg=white
+highlight Comment       ctermfg=035 guifg=#38B04A
+highlight Constant      ctermfg=204 guifg=#ff5f87
+highlight PreProc       ctermfg=219 guifg=#ffafff
+highlight SpecialKey    ctermfg=242 guifg=#666666
+
+" no underline, current cursor line
+highlight CursorLine    cterm=none
+
+" show cursorline for active window only
+augroup NrHighlight
+    autocmd!
+    autocmd BufEnter * setlocal cursorline
+    autocmd BufLeave * setlocal nocursorline
+augroup END
 
 map j gj
 map k gk
